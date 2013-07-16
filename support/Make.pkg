@@ -209,7 +209,7 @@ _obj/%._swig_run _obj/%.go _obj/%_gc.c _obj/%_wrap.c: %.swig
 
 _obj/%._swig_run _obj/%.go _obj/%_gc.c _obj/%_wrap.cxx: %.swigcxx
 	@mkdir -p _obj
-	swig -go -c++ $(_SWIGFLAG_$(GOOS)) -module $* -soname $(SWIG_PREFIX)-$*.$(_SOTYPE_$(GOOS)) $(SWIG_CXXFLAGS) -o _obj/$*_wrap.cxx -outdir _obj $<
+	swig -go -c++ $(_SWIGFLAG_$(GOOS)) -intgosize 32 -module $* -soname $(SWIG_PREFIX)-$*.$(_SOTYPE_$(GOOS)) $(SWIG_CXXFLAGS) -o _obj/$*_wrap.cxx -outdir _obj $<
 
 _obj/%_gc.$O: _obj/%_gc.c
 	$(CC) $(CFLAGS) -I . -I$(pkgdir) -o "$@" _obj/$*_gc.c
