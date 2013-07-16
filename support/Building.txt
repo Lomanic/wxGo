@@ -1,48 +1,41 @@
-The following is needed for building wxGo
+wxGo doesn't work out of the box after a simple 'go get github.com/Lomanic/wxGo' or 
+'go install github.com\Lomanic\wxGo', it needs to be compiled using SWIG.
+
+The following is needed for building wxGo on Windows.
+- MinGW (or Cygwin, I used MinGW, but it looks like Cygwin doesn't work)
 
 - wxWidgets (version 2.8.11.0 or version close to it.)
 
 - SWIG
 
-Download wxWidgets from www.wxWidgets.org. I have worked with the stable
-release which was 2.8.11.0 at the time but this code should very likely
-work with the most recent stable release.
+Download and install wxPack which comes with the pre-compiled wxWidgets libraries.
+https://github.com/rjpcomputing/wxpack/wiki
 
-Build wxWidgets from source. 
+Download the latest SWIG version from www.swig.org. SWIG now supports Go so you don't 
+have to build it from source.
+http://www.swig.org/download.html
 
-On the windows platform do that with MinGW/MSYS.
+Don't forget to add the binaries from SWIG and MinGW to your %PATH% environment 
+variable (for me it was C:\swigwin-2.0.10 and C:\MinGW\bin)
 
-TODO: Detailed wxWidgets build instructions
 
-After building wxWidgets make sure you get at least the 'Minimal' example
-working.
+Copy Make.pkg from your %GOPATH%\github.com\Lomanic\wxGo to your 
+%GOROOT%\src folder. If you don't have in this directory  Make.common or 
+Make.inc, download them from this github: https://github.com/niemeyer/golang/tree/master/src
 
-Download the latest SWIG version from www.swig.org. Go support for SWIG
-is still undergoing development. Especially for the Windows platform
-I needed to apply a patch for better dll support.
+Copy  dlimpexp.h and version.h from your wxWidgetsDirectory\include\wx to 
+%GOPATH%\github.com\Lomanic\wxGo\wx\wx (no, this is not a typo, there is a sub-directory 
+called 'wx' in the wx directory).
 
-That meant I had to build SWIG from source file on Windows which required
-some additional tools installed like bison, ed.
+I had to add %GOROOT%\pkg\tool\windows_386 to my %PATH% (this folder includes 8c.exe, 8g.exe...).
 
-The SWIG version you want is latest from SVN repository and then apply the
-patch done by Wei Guangjing.
-Look for the 'swig go support windows port' thread on golang-nuts.
-I have included the patch file with my wxGo repository in the support
-directory. In future releases if SWIG this will likely not be required.
-
-TODO: Detailed SWIG build from source instructions
-
-I also needed to make some changes to the Make.pkg file in the Go
-directory so it was able to link the SWIG dll with all the required
-library files. The changes file is in support/Make.pkg. These changes
-may also no longer needed when better swig/go/windows support is
-available.
+Copy cgocall.h and runtime.h from %GOROOT%\src\pkg\runtime to %GOPATH%\src\github.com\JeroenD\wxGo\wx\_obj
 
 If you got this far then you are almost there.
 
 To build the wxGo library:
-cd wx
-make install
+cd %GOPATH%\github.com\Lomanic\wxGo\wx
+mingw32-make install
 
 To build the examples apps just go to the relevant directories and type make.
 
