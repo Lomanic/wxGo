@@ -215,7 +215,7 @@ _obj/%_gc.$O: _obj/%_gc.c
 	$(CC)  $(CFLAGS) -I . -I $(pkgdir) -o "$@" _obj/$*_gc.c
 # if you experience problems with the previous command, try this one below:
 # $(CC)  -F -V -w -I . -I $(pkgdir) -o "$@" _obj/$*_gc.c
-# 
+# you have to separate the flags (for example, from -FVw to -F -V -w)
 
 _obj/%_wrap.o: _obj/%_wrap.c
 	$(HOST_CC) $(_CGO_CFLAGS_$(GOARCH)) -I . -g -fPIC -O2 -o $@ -c $^ $(SWIG_CFLAGS)
