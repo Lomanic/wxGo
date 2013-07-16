@@ -93,12 +93,12 @@ _gotest_.$O: $(GOFILES) $(GOTESTFILES) $(PREREQ)
 _obj/$(TARG).a: _go_.$O $(OFILES)
 	@mkdir -p _obj/$(dir)
 	rm -f _obj/$(TARG).a
-	gopack grc $@ _go_.$O $(OFILES)
+	go tool pack grc $@ _go_.$O $(OFILES)
 
 _test/$(TARG).a: _gotest_.$O $(OFILES)
 	@mkdir -p _test/$(dir)
 	rm -f _test/$(TARG).a
-	gopack grc $@ _gotest_.$O $(OFILES)
+	go tool pack grc $@ _gotest_.$O $(OFILES)
 
 importpath:
 	@echo $(TARG)
@@ -212,7 +212,10 @@ _obj/%._swig_run _obj/%.go _obj/%_gc.c _obj/%_wrap.cxx: %.swigcxx
 	swig -go -c++ $(_SWIGFLAG_$(GOOS)) -intgosize 32 -module $* -soname $(SWIG_PREFIX)-$*.$(_SOTYPE_$(GOOS)) $(SWIG_CXXFLAGS) -o _obj/$*_wrap.cxx -outdir _obj $<
 
 _obj/%_gc.$O: _obj/%_gc.c
-	$(CC) $(CFLAGS) -I . -I$(pkgdir) -o "$@" _obj/$*_gc.c
+	$(CC)  $(CFLAGS) -I . -I $(pkgdir) -o "$@" _obj/$*_gc.c
+# if you experience problems with the previous command, try this one below:
+# $(CC)  -F -V -w -I . -I $(pkgdir) -o "$@" _obj/$*_gc.c
+# 
 
 _obj/%_wrap.o: _obj/%_wrap.c
 	$(HOST_CC) $(_CGO_CFLAGS_$(GOARCH)) -I . -g -fPIC -O2 -o $@ -c $^ $(SWIG_CFLAGS)
