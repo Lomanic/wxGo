@@ -2,7 +2,8 @@ wxGo doesn't work out of the box after a simple 'go get github.com/Lomanic/wxGo'
 'go install github.com\Lomanic\wxGo', it needs to be compiled using SWIG.
 
 The following is needed for building wxGo on Windows.
-- MinGW (or Cygwin, I used MinGW, but it looks like Cygwin doesn't work)
+- MinGW (Go does not support the Cygwin toolchain according to this doc:
+http://code.google.com/p/go-wiki/wiki/InstallFromSource#Install_C_tools)
 
 - wxWidgets (version 2.8.11.0 or version close to it.)
 
